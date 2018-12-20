@@ -8,6 +8,7 @@ import sys
 #with the data as a json value. Otherwise it just sends a get request to the server. 
 # baseURL = "http://127.0.0.1:5000/vehicles/"
 baseURL = "https://neal-smartcar.herokuapp.com/vehicles/"
+baseURL = "http://127.0.0.1:8000/vehicles/"
 def performRequest(route, id, data = -1):
 	headers = {'Content-Type': 'application/json'}
 	json_data = {}
