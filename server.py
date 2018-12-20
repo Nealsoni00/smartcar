@@ -118,22 +118,22 @@ def engine(id, start):
 app = Flask(__name__)
 
 #The get routes performing their respective requests and returning the json data as a string
-@app.route("/vehicles/<id>")
+@app.route("/vehicles/<id>", methods=['GET'])
 def vehicleRequest(id):
     return json.dumps(info(id))
 
 
-@app.route("/vehicles/<id>/doors")
+@app.route("/vehicles/<id>/doors", methods=['GET'])
 def doorsRequest(id):
     return json.dumps(doors(id))
 
 
-@app.route("/vehicles/<id>/fuel")
+@app.route("/vehicles/<id>/fuel", methods=['GET'])
 def fuelRequest(id):
     return json.dumps(fuel(id))
 
 
-@app.route("/vehicles/<id>/battery")
+@app.route("/vehicles/<id>/battery", methods=['GET'])
 def batteryRequest(id):
     return json.dumps(battery(id))
 

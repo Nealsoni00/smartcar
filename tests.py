@@ -6,7 +6,8 @@ import sys
 
 #performs all the test requests. If data is present, then it performs a POST request
 #with the data as a json value. Otherwise it just sends a get request to the server. 
-baseURL = "http://127.0.0.1:5000/vehicles/"
+# baseURL = "http://127.0.0.1:5000/vehicles/"
+baseURL = "https://neal-smartcar.herokuapp.com/vehicles/"
 def performRequest(route, id, data = -1):
 	headers = {'Content-Type': 'application/json'}
 	json_data = {}
@@ -17,6 +18,9 @@ def performRequest(route, id, data = -1):
 		dataJson = json.dumps(data)
 		r = requests.post(baseURL + str(id) + route, data=dataJson, headers=headers)
 		json_data = json.loads(r.text)
+	print("data")
+	print json_data
+	print("end")
 	return json_data
 
 #Main function
@@ -39,7 +43,7 @@ if __name__ == '__main__':
 		print "Car On: "  + json.dumps( performRequest("/engine", car, data))
 		data = {'action': 'STOP'}
 		print "Car Off: " + json.dumps(performRequest("/engine", car, data))
-		
+
     
 # CURL tests: 
 # curl http://127.0.0.1:5000/vehicles/1235/engine -X POST -H 'Content-Type: application/json' -d '{'action': 'START'}'
