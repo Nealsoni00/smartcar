@@ -6,12 +6,16 @@ from flask import request
 import requests
 import json
 
+
+# This is the network manager to send post requests to the GM servers and 
+# get the return values as JSON data. This method is used by every function
+baseURL = "http://gmapi.azurewebsites.net"
 def performRequest(route, id, command = -1):
-	baseURL = "http://gmapi.azurewebsites.net"
+	
 	headers = {'Content-Type': 'application/json'}
 	data = {'id': str(id), 'responseType': 'JSON'}
 	if command != -1:
-		data = {'id': str(id), 'responseType': 'JSON', 'command': command}
+		data['command'] = command
 	
 	dataJson = json.dumps(data)
 	r = requests.post(baseURL + route, data=dataJson, headers=headers)
@@ -82,6 +86,12 @@ def engine(id, start):
 	else:
 		return "Error: " + engineResponse["status"]
 
+
+
+
+
+
+
 app = Flask(__name__)
 
 @app.route("/vehicles/<id>")
@@ -110,6 +120,7 @@ def engineRequest(id):
 		info = json.loads(request.data)["action"]
 		return json.dumps(engine(id, info))
 
+#Initial Test Code:
 # print info(1234)
 # print info(1235)
 

@@ -29,6 +29,7 @@ if __name__ == '__main__':
 			cars.append(sys.argv[i])
 
 	for car in cars:
+		print "_______ Car ID:" + str(car) + " _______";
 		print "Info: "    + json.dumps( performRequest("", car)) 
 		print "Doors: "   + json.dumps( performRequest("/doors", car))
 		print "Fuel: "    + json.dumps( performRequest("/fuel", car))
