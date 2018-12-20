@@ -145,6 +145,9 @@ def engineRequest(id):
 		info = json.loads(request.data)["action"]
 		return json.dumps(engine(id, info))
 
+if __name__ == '__main__':
+    app.run(debug=True)
+    
 #Initial Test Code:
 # print info(1234)
 # print info(1235)
