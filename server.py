@@ -21,8 +21,8 @@ def performRequest(route, id, command = -1):
 
 def info(id):
 	json_data = performRequest("/getVehicleInfoService", id)
-	data = json_data["data"] 
 	if (json_data["status"] == "200"):
+		data = json_data["data"] 
 		# print(json_data["data"])
 		info = {}
 		info["color"]      = data["color"]["value"] if data["color"]["type"]           == "String" else "Error: Color data type mismatch"

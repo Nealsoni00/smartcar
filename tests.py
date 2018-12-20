@@ -2,7 +2,7 @@
 # encoding: utf-8
 import requests
 import json
-
+import sys
 
 def performRequest(route, id, data = -1):
 	baseURL = "http://127.0.0.1:5000/vehicles/"
@@ -15,19 +15,33 @@ def performRequest(route, id, data = -1):
 		dataJson = json.dumps(data)
 		r = requests.post(baseURL + str(id) + route, data=dataJson, headers=headers)
 		json_data = json.loads(r.text)
-	
+		
 	return json_data
 
-cars = [1234, 1235]
-for car in cars:
-	print performRequest("", car)
-	print performRequest("/doors", car)
-	print performRequest("/fuel", car)
-	print performRequest("/battery", car)
-	data = {'action': 'START'}
-	print performRequest("/engine", car, data)
-	data = {'action': 'STOP'}
-	print performRequest("/engine", car, data)
+
+if __name__ == '__main__':
+    #pass in the username of the account you want to download
+	cars = []
+	if len(sys.argv) == 1:
+		cars = [1234, 1235]
+	else:
+		for i in range(1, len(sys.argv)):
+			cars.append(sys.argv[i])
+
+	for car in cars:
+		print "Info: "    + json.dumps( performRequest("", car)) 
+		print "Doors: "   + json.dumps( performRequest("/doors", car))
+		print "Fuel: "    + json.dumps( performRequest("/fuel", car))
+		print "Battery: " + json.dumps( performRequest("/battery", car))
+		data = {'action': 'START'}
+		print "Car On: "  + json.dumps( performRequest("/engine", car, data))
+		data = {'action': 'STOP'}
+		print "Car Off: " + json.dumps(performRequest("/engine", car, data))
+		
+    
+
+
+
 	
 
 
