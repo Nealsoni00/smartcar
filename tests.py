@@ -4,8 +4,10 @@ import requests
 import json
 import sys
 
+#performs all the test requests. If data is present, then it performs a POST request
+#with the data as a json value. Otherwise it just sends a get request to the server. 
+baseURL = "http://127.0.0.1:5000/vehicles/"
 def performRequest(route, id, data = -1):
-	baseURL = "http://127.0.0.1:5000/vehicles/"
 	headers = {'Content-Type': 'application/json'}
 	json_data = {}
 	if data == -1: #if -1, we want to do a get without data being sent
@@ -15,20 +17,19 @@ def performRequest(route, id, data = -1):
 		dataJson = json.dumps(data)
 		r = requests.post(baseURL + str(id) + route, data=dataJson, headers=headers)
 		json_data = json.loads(r.text)
-		
 	return json_data
 
-
+#Main function
 if __name__ == '__main__':
-    #pass in the username of the account you want to download
+    #pass in the ID of the Vehicles you want to test. Otherwise it choses the default
+    #two cars. 
 	cars = []
 	if len(sys.argv) == 1:
 		cars = [1234, 1235]
 	else:
 		for i in range(1, len(sys.argv)):
 			cars.append(sys.argv[i])
-
-	for car in cars:
+	for car in cars: #perform all the types of requests on the cars.
 		print "_______ Car ID:" + str(car) + " _______";
 		print "Info: "    + json.dumps( performRequest("", car)) 
 		print "Doors: "   + json.dumps( performRequest("/doors", car))
@@ -40,13 +41,8 @@ if __name__ == '__main__':
 		print "Car Off: " + json.dumps(performRequest("/engine", car, data))
 		
     
-
-
-
-	
-
-
-# "curl http://127.0.0.1:5000/vehicles/1235/engine -X POST -H 'Content-Type: application/json' -d '{'action': 'START'}'"
+# CURL tests: 
+# curl http://127.0.0.1:5000/vehicles/1235/engine -X POST -H 'Content-Type: application/json' -d '{'action': 'START'}'
 # curl http://127.0.0.1:5000/vehicles/1235/engine -X POST -H 'Content-Type: application/json' -d '{"action": "STOP"}'
 # curl http://127.0.0.1:5000/vehicles/1234/engine -X POST -H 'Content-Type: application/json' -d '{"action": "START"}'
 # curl http://127.0.0.1:5000/vehicles/1234/engine -X POST -H 'Content-Type: application/json' -d '{"action": "STOP"}'
